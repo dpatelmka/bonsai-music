@@ -1,0 +1,5 @@
+# Node
+node_modules/
+
+# Downloaded audio + the library file (these are generated, not source code)
+downloads/
