@@ -1,0 +1,13 @@
+{
+  "name": "bonsai",
+  "version": "1.0.0",
+  "description": "A cinematic zen music player and ad-free YouTube playlist alternative. Your library grows a bonsai.",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
