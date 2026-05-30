@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
-  <title>Bonsai</title>
+  <title>Bonsai Music Player</title>
 
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="mobile-web-app-capable" content="yes" />
@@ -22,16 +22,20 @@
        BONSAI — calm zen theme. Change these vars to recolour.
     ============================================================ */
     :root {
-      --ink:        #ece6d8;
-      --ink-dim:    rgba(236, 230, 216, 0.55);
+      --ink:        #eef0ea;
+      --ink-dim:    rgba(238, 240, 234, 0.58);
       --night:      #0a120e;
-      --paper:      rgba(30, 28, 22, 0.5);
-      --paper-2:    rgba(44, 40, 31, 0.66);
-      --stroke:     rgba(236, 230, 216, 0.13);
-      --amber:      #e0b475;
-      --jade-1:     #8fb89a;
-      --jade-2:     #557a61;
-      --radius:     26px;
+      /* liquid-glass material */
+      --paper:      rgba(150, 175, 160, 0.10);
+      --paper-2:    rgba(165, 190, 175, 0.20);
+      --glass-hi:   rgba(255, 255, 255, 0.55);   /* top specular edge */
+      --glass-lo:   rgba(0, 0, 0, 0.26);          /* bottom bevel      */
+      --stroke:     rgba(255, 255, 255, 0.22);
+      --blur:       30px;
+      --amber:      #e6bd80;
+      --jade-1:     #9fc8a9;
+      --jade-2:     #5b8268;
+      --radius:     28px;
       --display: 'Zen Old Mincho', 'Hiragino Mincho ProN', Georgia, serif;
       --body:    'Zen Kaku Gothic New', 'Hiragino Sans', system-ui, sans-serif;
     }
@@ -55,9 +59,10 @@
     .atmos {
       z-index: -5;
       background:
-        radial-gradient(75% 55% at 80% 6%, rgba(224, 180, 117, 0.14), transparent 60%),
-        radial-gradient(90% 80% at 50% 112%, rgba(60, 95, 72, 0.22), transparent 62%),
-        linear-gradient(180deg, #0d1712 0%, #0a120e 50%, #070d0a 100%);
+        radial-gradient(60% 45% at 78% 4%, rgba(230, 189, 128, 0.18), transparent 60%),
+        radial-gradient(55% 50% at 16% 30%, rgba(95, 130, 104, 0.20), transparent 60%),
+        radial-gradient(90% 80% at 50% 114%, rgba(70, 110, 84, 0.26), transparent 62%),
+        linear-gradient(180deg, #0e1813 0%, #0a120e 52%, #070d0a 100%);
     }
     .art-backdrop {
       z-index: -4;
@@ -80,12 +85,18 @@
 
     .paper {
       position: relative;
-      background: var(--paper);
-      backdrop-filter: blur(24px) saturate(125%);
-      -webkit-backdrop-filter: blur(24px) saturate(125%);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0) 38%),
+        radial-gradient(130% 90% at 0% 0%, rgba(255,255,255,0.10), transparent 46%),
+        var(--paper);
+      backdrop-filter: blur(var(--blur)) saturate(180%) brightness(1.08);
+      -webkit-backdrop-filter: blur(var(--blur)) saturate(180%) brightness(1.08);
       border: 1px solid var(--stroke);
       border-radius: var(--radius);
-      box-shadow: 0 16px 44px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      box-shadow:
+        0 18px 50px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 var(--glass-hi),
+        inset 0 -1px 1px var(--glass-lo);
     }
 
     /* ---------- header ---------- */
@@ -97,9 +108,11 @@
 
     .icon-btn {
       width: 44px; height: 44px; border-radius: 50%;
-      border: 1px solid var(--stroke); background: rgba(30, 28, 22, 0.5);
-      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0) 55%), var(--paper);
+      backdrop-filter: blur(20px) saturate(170%) brightness(1.1); -webkit-backdrop-filter: blur(20px) saturate(170%) brightness(1.1);
       color: var(--ink); display: grid; place-items: center; cursor: pointer; position: relative;
+      box-shadow: inset 0 1px 0 var(--glass-hi), inset 0 -1px 1px var(--glass-lo), 0 6px 16px rgba(0,0,0,0.3);
       transition: transform 0.15s ease, background 0.2s ease, color 0.2s ease;
     }
     .icon-btn:active { transform: scale(0.9); }
@@ -117,8 +130,11 @@
 
     .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 13px; }
     .chip {
-      border: 1px solid var(--stroke); background: rgba(255, 255, 255, 0.05); color: var(--ink);
-      font-family: var(--body); font-size: 13.5px; font-weight: 500; padding: 9px 15px; border-radius: 999px; cursor: pointer;
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0) 60%), var(--paper);
+      backdrop-filter: blur(16px) saturate(160%); -webkit-backdrop-filter: blur(16px) saturate(160%);
+      color: var(--ink); font-family: var(--body); font-size: 13.5px; font-weight: 500; padding: 9px 15px; border-radius: 999px; cursor: pointer;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
       transition: transform 0.12s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
     }
     .chip:active { transform: scale(0.94); }
@@ -168,6 +184,9 @@
       transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.5s ease;
     }
     .leaf.grown { transform: scale(1); opacity: 1; }
+    /* branches fade in alongside their foliage pad as the garden grows */
+    .branch { opacity: 0; transition: opacity 0.7s ease; }
+    .branch.grown { opacity: 1; }
     /* leaves flutter in the wind ONLY while playing */
     .now-playing.playing .leaf.grown { animation: leafWind var(--wd, 5s) ease-in-out infinite; }
     @keyframes leafWind {
@@ -194,7 +213,7 @@
     .ctrl.ghost { width: 42px; height: 42px; color: var(--ink-dim); }
     .ctrl.ghost svg { width: 19px; height: 19px; }
     .ctrl.ghost.on { color: var(--jade-1); background: rgba(143, 184, 154, 0.16); }
-    .ctrl.play { width: 66px; height: 66px; color: #14210f; background: radial-gradient(circle at 35% 30%, #cfe6d2, var(--jade-1)); box-shadow: 0 0 24px rgba(143, 184, 154, 0.4), 0 8px 20px rgba(0, 0, 0, 0.4); }
+    .ctrl.play { width: 66px; height: 66px; color: #12210d; background: radial-gradient(circle at 34% 28%, rgba(255,255,255,0.95), rgba(159,200,169,0.85) 60%, rgba(91,130,104,0.85)); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.5); box-shadow: 0 0 26px rgba(159,200,169,0.5), inset 0 1px 2px rgba(255,255,255,0.7), 0 8px 20px rgba(0, 0, 0, 0.4); }
     .ctrl.play svg { width: 30px; height: 30px; }
 
     /* ---------- add a song ---------- */
@@ -204,7 +223,7 @@
     .link-icon svg { width: 20px; height: 20px; }
     #urlInput { flex: 1; min-width: 0; background: transparent; border: none; outline: none; color: var(--ink); font-family: var(--body); font-size: 16px; padding: 12px 4px; }
     #urlInput::placeholder { color: var(--ink-dim); }
-    .add-btn { flex-shrink: 0; width: 46px; height: 46px; border: none; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #cfe6d2, var(--jade-1)); color: #14210f; display: grid; place-items: center; cursor: pointer; box-shadow: 0 0 16px rgba(143, 184, 154, 0.35); transition: transform 0.15s ease, opacity 0.2s ease; }
+    .add-btn { flex-shrink: 0; width: 46px; height: 46px; border: 1px solid rgba(255,255,255,0.5); border-radius: 50%; background: radial-gradient(circle at 34% 28%, rgba(255,255,255,0.95), rgba(159,200,169,0.85) 60%, rgba(91,130,104,0.85)); color: #12210d; display: grid; place-items: center; cursor: pointer; box-shadow: 0 0 18px rgba(159,200,169,0.45), inset 0 1px 2px rgba(255,255,255,0.7); transition: transform 0.15s ease, opacity 0.2s ease; }
     .add-btn:active { transform: scale(0.9); }
     .add-btn:disabled { opacity: 0.55; }
     .add-btn svg { width: 22px; height: 22px; }
@@ -219,7 +238,7 @@
     .lib-head { display: flex; align-items: center; gap: 10px; padding: 2px 6px 10px; }
     .lib-head h2 { margin: 0; font-family: var(--display); font-size: 23px; font-weight: 700; letter-spacing: 0.3px; max-width: 60%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .lib-count { font-size: 13px; color: var(--ink-dim); }
-    .mini-btn { margin-left: auto; width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--stroke); background: rgba(30,28,22,0.5); color: var(--ink-dim); display: grid; place-items: center; cursor: pointer; transition: transform 0.15s ease, color 0.2s ease; }
+    .mini-btn { margin-left: auto; width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--stroke); background: linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0) 55%), var(--paper); backdrop-filter: blur(16px) saturate(160%); -webkit-backdrop-filter: blur(16px) saturate(160%); color: var(--ink-dim); display: grid; place-items: center; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,0.28); transition: transform 0.15s ease, color 0.2s ease; }
     .mini-btn:active { transform: scale(0.9); }
     .mini-btn[hidden] { display: none; }
     .mini-btn svg { width: 17px; height: 17px; }
@@ -227,13 +246,13 @@
     /* playlist tabs */
     .tabs { display: flex; gap: 8px; overflow-x: auto; padding: 2px 4px 14px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
     .tabs::-webkit-scrollbar { display: none; }
-    .tab { flex-shrink: 0; border: 1px solid var(--stroke); background: rgba(255, 255, 255, 0.04); color: var(--ink); font-family: var(--body); font-size: 13.5px; font-weight: 500; padding: 8px 15px; border-radius: 999px; cursor: pointer; white-space: nowrap; transition: transform 0.12s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease; }
+    .tab { flex-shrink: 0; border: 1px solid var(--stroke); background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0) 60%), var(--paper); backdrop-filter: blur(16px) saturate(160%); -webkit-backdrop-filter: blur(16px) saturate(160%); color: var(--ink); font-family: var(--body); font-size: 13.5px; font-weight: 500; padding: 8px 15px; border-radius: 999px; cursor: pointer; white-space: nowrap; box-shadow: inset 0 1px 0 rgba(255,255,255,0.28); transition: transform 0.12s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease; }
     .tab:active { transform: scale(0.94); }
-    .tab.on { background: var(--jade-2); color: #fff; border-color: var(--jade-1); font-weight: 700; }
+    .tab.on { background: linear-gradient(180deg, rgba(255,255,255,0.2), rgba(255,255,255,0) 60%), rgba(91, 130, 104, 0.85); color: #fff; border-color: rgba(159,200,169,0.7); font-weight: 700; }
     .tab.add { color: var(--ink-dim); font-weight: 700; }
 
     .song-list { display: flex; flex-direction: column; gap: 9px; }
-    .song { display: flex; align-items: center; gap: 11px; padding: 9px 8px 9px 11px; border-radius: 18px; background: var(--paper); backdrop-filter: blur(16px) saturate(120%); -webkit-backdrop-filter: blur(16px) saturate(120%); border: 1px solid rgba(236, 230, 216, 0.08); cursor: pointer; transition: background 0.2s ease, transform 0.12s ease, border-color 0.2s ease; }
+    .song { display: flex; align-items: center; gap: 11px; padding: 9px 8px 9px 11px; border-radius: 20px; background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0) 50%), var(--paper); backdrop-filter: blur(22px) saturate(170%) brightness(1.06); -webkit-backdrop-filter: blur(22px) saturate(170%) brightness(1.06); border: 1px solid var(--stroke); box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), inset 0 -1px 1px rgba(0,0,0,0.2), 0 8px 22px rgba(0,0,0,0.3); cursor: pointer; transition: background 0.2s ease, transform 0.12s ease, border-color 0.2s ease; }
     .song:active { transform: scale(0.985); }
     .song.active { background: var(--paper-2); border-color: rgba(143, 184, 154, 0.4); }
     .song-thumb { width: 50px; height: 50px; border-radius: 13px; object-fit: cover; flex-shrink: 0; background: linear-gradient(135deg, var(--jade-2), #2c4636); }
@@ -266,7 +285,7 @@
 
     /* bottom sheet */
     #sheetWrap { align-items: flex-end; }
-    .sheet { position: relative; width: 100%; max-width: 520px; margin: 0 auto; background: #14211a; border: 1px solid var(--stroke); border-bottom: none; border-radius: 26px 26px 0 0; padding: 10px 14px calc(env(safe-area-inset-bottom) + 16px); box-shadow: 0 -16px 50px rgba(0,0,0,0.5); animation: slideUp 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); }
+    .sheet { position: relative; width: 100%; max-width: 520px; margin: 0 auto; background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0) 30%), rgba(26, 38, 31, 0.72); backdrop-filter: blur(40px) saturate(180%) brightness(1.08); -webkit-backdrop-filter: blur(40px) saturate(180%) brightness(1.08); border: 1px solid var(--stroke); border-bottom: none; border-radius: 30px 30px 0 0; padding: 10px 14px calc(env(safe-area-inset-bottom) + 16px); box-shadow: 0 -16px 50px rgba(0,0,0,0.5), inset 0 1px 0 var(--glass-hi); animation: slideUp 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); }
     @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
     .sheet-grip { width: 38px; height: 4px; border-radius: 2px; background: rgba(236,230,216,0.2); margin: 4px auto 12px; }
     .sheet-title { font-family: var(--display); font-size: 16px; font-weight: 700; padding: 0 6px 10px; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -284,7 +303,7 @@
 
     /* center modal */
     #modalWrap { align-items: center; justify-content: center; padding: 24px; }
-    .modal { position: relative; width: 100%; max-width: 360px; background: #14211a; border: 1px solid var(--stroke); border-radius: 22px; padding: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); animation: pop 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.2); }
+    .modal { position: relative; width: 100%; max-width: 360px; background: linear-gradient(180deg, rgba(255,255,255,0.13), rgba(255,255,255,0) 32%), rgba(26, 38, 31, 0.74); backdrop-filter: blur(40px) saturate(180%) brightness(1.08); -webkit-backdrop-filter: blur(40px) saturate(180%) brightness(1.08); border: 1px solid var(--stroke); border-radius: 26px; padding: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 var(--glass-hi); animation: pop 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.2); }
     @keyframes pop { from { transform: scale(0.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     .modal-title { font-family: var(--display); font-size: 18px; font-weight: 700; margin-bottom: 14px; }
     .modal-input { width: 100%; background: rgba(0,0,0,0.25); border: 1px solid var(--stroke); border-radius: 13px; color: var(--ink); font-family: var(--body); font-size: 16px; padding: 13px 14px; outline: none; }
@@ -371,6 +390,16 @@
             <radialGradient id="jadeGrad" cx="40%" cy="30%" r="80%">
               <stop offset="0" stop-color="#a6cbad"/><stop offset="55%" stop-color="#5d8568"/><stop offset="100%" stop-color="#314e3c"/>
             </radialGradient>
+            <!-- individual leaf shades (light -> deep) -->
+            <linearGradient id="leafA" x1="0.3" y1="0" x2="0.5" y2="1">
+              <stop offset="0" stop-color="#c2e2c7"/><stop offset="100%" stop-color="#71a37e"/>
+            </linearGradient>
+            <linearGradient id="leafB" x1="0.3" y1="0" x2="0.5" y2="1">
+              <stop offset="0" stop-color="#90c09c"/><stop offset="100%" stop-color="#4e7a5e"/>
+            </linearGradient>
+            <linearGradient id="leafC" x1="0.3" y1="0" x2="0.5" y2="1">
+              <stop offset="0" stop-color="#6ba07c"/><stop offset="100%" stop-color="#365840"/>
+            </linearGradient>
             <filter id="softGlow" x="-40%" y="-40%" width="180%" height="180%">
               <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.35"/>
             </filter>
@@ -386,11 +415,10 @@
           </g>
 
           <!-- tree (sways only while playing) -->
+          <!-- tree (sways only while playing); trunk + branches + leaves are built in JS -->
           <g class="tree" id="tree">
-            <path class="ink" stroke-width="11" d="M160 264 C146 236 176 218 158 190 C146 168 174 156 160 132 C153 120 158 110 160 98"/>
-            <path class="ink" stroke-width="7"  d="M158 196 C138 188 120 182 100 176"/>
-            <path class="ink" stroke-width="6"  d="M160 150 C182 146 200 140 220 132"/>
-            <path class="ink" stroke-width="5"  d="M150 168 C140 170 132 172 122 176"/>
+            <path id="trunk" fill="url(#barkGrad)" stroke="rgba(0,0,0,0.18)" stroke-width="0.5"></path>
+            <g id="branches"></g>
             <g id="canopy"></g>
           </g>
         </svg>
@@ -543,54 +571,164 @@
     playBtn.innerHTML = ICONS.play;
 
     // ============================================================
-    //  GREEN BONSAI — grows with the garden, sways when playing
+    //  GREEN BONSAI — a real little tree: tapered trunk + branches,
+    //  with flattened foliage pads of detailed leaves at the tips.
+    //  Grows with the garden, sways in the wind only while playing.
     // ============================================================
+
+    // Trunk spine (informal-upright S-curve): {x, y, w = thickness}
+    const TRUNK = [
+      { x: 150, y: 266, w: 30 },
+      { x: 145, y: 226, w: 22 },
+      { x: 163, y: 194, w: 17 },
+      { x: 150, y: 160, w: 14 },
+      { x: 167, y: 122, w: 10 },
+      { x: 159, y: 94,  w: 7 },
+      { x: 163, y: 74,  w: 5 },
+    ];
+
+    // Branches — each a tapered spine from the trunk out to a pad tip.
+    // Index i corresponds to foliage pad order i+1.
+    const BRANCHES = [
+      [{ x: 150, y: 196, w: 12 }, { x: 121, y: 188, w: 8 }, { x: 92,  y: 180, w: 4 }], // 1 low-left
+      [{ x: 160, y: 170, w: 11 }, { x: 193, y: 158, w: 7 }, { x: 226, y: 150, w: 4 }], // 2 mid-right
+      [{ x: 152, y: 158, w: 10 }, { x: 128, y: 146, w: 6 }, { x: 104, y: 134, w: 3 }], // 3 mid-left
+      [{ x: 158, y: 188, w: 9 },  { x: 177, y: 180, w: 5 }, { x: 196, y: 174, w: 3 }], // 4 low-right
+      [{ x: 165, y: 126, w: 9 },  { x: 188, y: 114, w: 6 }, { x: 210, y: 104, w: 3 }], // 5 upper-right
+      [{ x: 158, y: 104, w: 8 },  { x: 142, y: 96,  w: 5 }, { x: 126, y: 90,  w: 3 }], // 6 upper-left
+    ];
+
+    // Foliage pads — flattened domes (rx wide, ry shallow). Order 7 = apex crown.
     const CLUSTERS = [
-      { cx: 160, cy: 96,  r: 34, order: 1 },
-      { cx: 100, cy: 146, r: 26, order: 2 },
-      { cx: 220, cy: 116, r: 26, order: 3 },
-      { cx: 128, cy: 166, r: 20, order: 4 },
-      { cx: 160, cy: 70,  r: 24, order: 5 },
-      { cx: 116, cy: 108, r: 20, order: 6 },
-      { cx: 206, cy: 90,  r: 20, order: 7 },
-      { cx: 196, cy: 150, r: 20, order: 8 },
+      { cx: 88,  cy: 172, rx: 33, ry: 18, order: 1 },
+      { cx: 228, cy: 142, rx: 32, ry: 17, order: 2 },
+      { cx: 104, cy: 124, rx: 27, ry: 15, order: 3 },
+      { cx: 198, cy: 170, rx: 24, ry: 13, order: 4 },
+      { cx: 212, cy: 96,  rx: 26, ry: 14, order: 5 },
+      { cx: 124, cy: 82,  rx: 24, ry: 13, order: 6 },
+      { cx: 163, cy: 64,  rx: 31, ry: 17, order: 7 },
     ];
     const MAX_GROWTH = CLUSTERS.length;
     function seeded(n) { const x = Math.sin(n * 99.13) * 43758.5453; return x - Math.floor(x); }
 
+    // ---- tapered "ribbon" geometry for trunk & branches ----
+    function catmull(p0, p1, p2, p3, t) {
+      const t2 = t * t, t3 = t2 * t;
+      const c = (a, b, cc, d) => 0.5 * ((2 * b) + (-a + cc) * t + (2 * a - 5 * b + 4 * cc - d) * t2 + (-a + 3 * b - 3 * cc + d) * t3);
+      return { x: c(p0.x, p1.x, p2.x, p3.x), y: c(p0.y, p1.y, p2.y, p3.y), w: c(p0.w, p1.w, p2.w, p3.w) };
+    }
+    function ribbon(spine, per) {
+      const ext = [spine[0]].concat(spine, [spine[spine.length - 1]]);
+      const pts = [];
+      for (let i = 0; i < spine.length - 1; i++)
+        for (let s = 0; s < per; s++) pts.push(catmull(ext[i], ext[i + 1], ext[i + 2], ext[i + 3], s / per));
+      pts.push(spine[spine.length - 1]);
+      const L = [], R = [];
+      for (let i = 0; i < pts.length; i++) {
+        const a = pts[Math.max(0, i - 1)], b = pts[Math.min(pts.length - 1, i + 1)];
+        let dx = b.x - a.x, dy = b.y - a.y; const len = Math.hypot(dx, dy) || 1; dx /= len; dy /= len;
+        const nx = -dy, ny = dx, hw = Math.max(0, pts[i].w) / 2;
+        L.push([pts[i].x + nx * hw, pts[i].y + ny * hw]);
+        R.push([pts[i].x - nx * hw, pts[i].y - ny * hw]);
+      }
+      let d = 'M ' + L[0][0].toFixed(1) + ' ' + L[0][1].toFixed(1);
+      for (let i = 1; i < L.length; i++) d += ' L ' + L[i][0].toFixed(1) + ' ' + L[i][1].toFixed(1);
+      for (let i = R.length - 1; i >= 0; i--) d += ' L ' + R[i][0].toFixed(1) + ' ' + R[i][1].toFixed(1);
+      return d + ' Z';
+    }
+
+    function buildTree() {
+      const NS = 'http://www.w3.org/2000/svg';
+      document.getElementById('trunk').setAttribute('d', ribbon(TRUNK, 12));
+      const bg = document.getElementById('branches');
+      BRANCHES.forEach((sp, i) => {
+        const p = document.createElementNS(NS, 'path');
+        p.setAttribute('class', 'branch');
+        p.setAttribute('d', ribbon(sp, 9));
+        p.setAttribute('fill', 'url(#barkGrad)');
+        p.dataset.order = i + 1;
+        bg.appendChild(p);
+      });
+    }
+
+    // ---- a detailed leaf: pointed blade + midrib + lateral veins + stem ----
+    function leafPath(L, Wd) {
+      const tip = (-L).toFixed(1);
+      return 'M0 ' + tip +
+        ' C ' + (Wd * 0.9).toFixed(1) + ' ' + (-L * 0.5).toFixed(1) + ', ' + Wd.toFixed(1) + ' ' + (L * 0.2).toFixed(1) + ', ' + (Wd * 0.42).toFixed(1) + ' ' + (L * 0.82).toFixed(1) +
+        ' C ' + (Wd * 0.18).toFixed(1) + ' ' + L.toFixed(1) + ', ' + (-Wd * 0.18).toFixed(1) + ' ' + L.toFixed(1) + ', ' + (-Wd * 0.42).toFixed(1) + ' ' + (L * 0.82).toFixed(1) +
+        ' C ' + (-Wd).toFixed(1) + ' ' + (L * 0.2).toFixed(1) + ', ' + (-Wd * 0.9).toFixed(1) + ' ' + (-L * 0.5).toFixed(1) + ', 0 ' + tip + ' Z';
+    }
+    function veinPath(L, Wd) {
+      const f = (n) => n.toFixed(1);
+      return 'M0 ' + f(L * 1.04) + ' L0 ' + f(-L * 0.9) +
+        ' M0 ' + f(-L * 0.12) + ' L' + f(Wd * 0.55) + ' ' + f(-L * 0.42) +
+        ' M0 ' + f(-L * 0.12) + ' L' + f(-Wd * 0.55) + ' ' + f(-L * 0.42) +
+        ' M0 ' + f(L * 0.34) + ' L' + f(Wd * 0.5) + ' ' + f(L * 0.04) +
+        ' M0 ' + f(L * 0.34) + ' L' + f(-Wd * 0.5) + ' ' + f(L * 0.04);
+    }
+
     function buildCanopy() {
       const NS = 'http://www.w3.org/2000/svg';
+      const FILLS = ['url(#leafA)', 'url(#leafB)', 'url(#leafC)'];
       CLUSTERS.sort((a, b) => a.order - b.order).forEach((c, idx) => {
-        const g = document.createElementNS(NS, 'g');
-        g.setAttribute('class', 'leaf');
-        g.dataset.order = c.order;
-        g.style.setProperty('--wd', (4.2 + seeded(idx) * 2.4).toFixed(2) + 's'); // each cluster a slightly different wind
-        g.style.animationDelay = (seeded(idx * 5) * -3).toFixed(2) + 's';
-        const core = document.createElementNS(NS, 'ellipse');
-        core.setAttribute('cx', c.cx); core.setAttribute('cy', c.cy);
-        core.setAttribute('rx', c.r * 0.9); core.setAttribute('ry', c.r * 0.72);
-        core.setAttribute('fill', 'url(#jadeGrad)');
-        g.appendChild(core);
-        for (let i = 0; i < 4; i++) {
-          const a = (i / 4) * Math.PI * 2, off = c.r * 0.42;
-          const e = document.createElementNS(NS, 'ellipse');
-          e.setAttribute('cx', (c.cx + Math.cos(a) * off * (0.6 + seeded(idx * 7 + i))).toFixed(1));
-          e.setAttribute('cy', (c.cy + Math.sin(a) * off * (0.5 + seeded(idx * 9 + i))).toFixed(1));
-          e.setAttribute('rx', (c.r * (0.62 + seeded(idx + i) * 0.3)).toFixed(1));
-          e.setAttribute('ry', (c.r * (0.5 + seeded(idx * 3 + i) * 0.25)).toFixed(1));
-          e.setAttribute('fill', 'url(#jadeGrad)');
-          g.appendChild(e);
+        // one pad = one grow/sway unit, packed with detailed leaves
+        const cluster = document.createElementNS(NS, 'g');
+        cluster.setAttribute('class', 'leaf');
+        cluster.dataset.order = c.order;
+        cluster.style.setProperty('--wd', (4.2 + seeded(idx) * 2.4).toFixed(2) + 's'); // each pad a slightly different wind
+        cluster.style.animationDelay = (seeded(idx * 5) * -3).toFixed(2) + 's';
+
+        const count = Math.max(9, Math.min(16, Math.round((c.rx + c.ry) * 0.42)));
+        for (let i = 0; i < count; i++) {
+          const s1 = seeded(idx * 31 + i * 7);
+          const s2 = seeded(idx * 17 + i * 13);
+          const s3 = seeded(idx * 23 + i * 5);
+          const s4 = seeded(idx * 13 + i * 3);
+
+          // scatter inside the flattened pad, lifted toward the top (a dome)
+          const a = s1 * Math.PI * 2, r = Math.sqrt(s2);
+          const ex = Math.cos(a) * r;
+          const ey = Math.sin(a) * r * 0.82 - 0.12;
+          const px = c.cx + ex * c.rx;
+          const py = c.cy + ey * c.ry;
+
+          // leaves stand up and lean outward by their horizontal position
+          const tx = ex * 0.8, ty = -1, tl = Math.hypot(tx, ty) || 1;
+          const rot = Math.atan2(tx / tl, -ty / tl) * 180 / Math.PI + (s4 - 0.5) * 26;
+
+          const Lf = c.ry * (0.9 + s3 * 0.7);
+          const Wd = Lf * (0.40 + s1 * 0.16);
+
+          const leaf = document.createElementNS(NS, 'g');
+          leaf.setAttribute('transform', 'translate(' + px.toFixed(1) + ' ' + py.toFixed(1) + ') rotate(' + rot.toFixed(1) + ')');
+
+          const blade = document.createElementNS(NS, 'path');
+          blade.setAttribute('d', leafPath(Lf, Wd));
+          blade.setAttribute('fill', FILLS[Math.floor(s2 * 3) % 3]);
+          leaf.appendChild(blade);
+
+          const vein = document.createElementNS(NS, 'path');
+          vein.setAttribute('d', veinPath(Lf, Wd));
+          vein.setAttribute('stroke', 'rgba(20,56,32,0.30)');
+          vein.setAttribute('stroke-width', Math.max(0.45, Lf * 0.045).toFixed(2));
+          vein.setAttribute('stroke-linecap', 'round');
+          vein.setAttribute('fill', 'none');
+          leaf.appendChild(vein);
+
+          cluster.appendChild(leaf);
         }
-        canopyEl.appendChild(g);
+        canopyEl.appendChild(cluster);
       });
     }
     function updateGrowth() {
-      const grown = Math.min(songs.length, MAX_GROWTH);
+      // The bonsai always shows its full foliage now (no longer gated by how
+      // many songs you have), so you always see a complete, leafy tree.
       canopyEl.querySelectorAll('.leaf').forEach((leaf, i) => {
-        const on = parseInt(leaf.dataset.order, 10) <= grown;
-        leaf.style.transitionDelay = on ? (i * 0.06) + 's' : '0s';
-        leaf.classList.toggle('grown', on);
+        leaf.style.transitionDelay = (i * 0.04) + 's';
+        leaf.classList.add('grown');
       });
+      document.querySelectorAll('.branch').forEach((b) => b.classList.add('grown'));
     }
 
     // ============================================================
@@ -1093,6 +1231,7 @@
     // ============================================================
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
+    buildTree();
     buildCanopy();
     initLeaves();
     animateLeaves();
